@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "My awesome New Tab override",
+  "name": "pexel background chrome extention from wesley",
   "version": "1.0",
   "chrome_url_overrides" : {
     "newtab": "newtab/dist/index.html"
