@@ -15,8 +15,7 @@ function handleKeyPress(props, event) {
 }
 
 function IndexPage(Props) {
-  const idx = Math.floor(Math.random() * window.bgimages.length);
-  const url = window.bgimages[idx];
+  const url = window.bgimages[0];
   return (
     <div className={styles.normal}>
       <div className={styles.main}>
@@ -31,7 +30,7 @@ function IndexPage(Props) {
           onChange={changeInputBuffer.bind(null, Props.dispatch)}
           onKeyPress={handleKeyPress.bind(null, Props)}
           value={Props.todo.inputBuffer}
-          placeholder="今天有什么需要做的？"
+          placeholder="还有什么需要做的吗？"
         />
       </div>
     </div>
