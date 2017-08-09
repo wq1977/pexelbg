@@ -1,0 +1,45 @@
+
+.normal {
+  text-align: center;
+  display: flex;
+  flex:1;
+  flex-direction: row;
+}
+
+.photo {
+  flex: 1;
+  align-self: stretch;
+  height: auto;
+  width: auto;
+}
+
+.submain {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  flex: 1;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+
+.input {
+  margin: 5px;
+  align-self: stretch;
+}
+
+.main {
+  display: flex;
+  flex:1;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;  
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: normal;
+  letter-spacing: -1px;
+  margin-bottom: 1cm;
+}
+
