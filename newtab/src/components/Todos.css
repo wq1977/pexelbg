@@ -9,15 +9,17 @@
 }
 
 .linegood {
-  line-height: 300%;
+  line-height: 200%;
   text-align: left;
   font-size: 14px;
   cursor: pointer;
   border-bottom: 1px dashed gainsboro;
+  padding: 10px 0;
 }
 
 .linedeleted {
-  line-height: 300%;
+  padding: 10px 0;
+  line-height: 200%;
   text-align: left;
   text-decoration: line-through wavy red;
   font-size: 14px;
