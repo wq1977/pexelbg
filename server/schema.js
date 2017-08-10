@@ -17,7 +17,7 @@ const Photo = new GraphQLObjectType({
         url: {
             type: GraphQLString,
             resolve: (photo) => {
-                return photo.url
+                return photo.url + '?w=1880&auto=compress&cs=tinysrgb';
             }
         },
     }

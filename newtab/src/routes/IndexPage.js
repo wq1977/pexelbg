@@ -15,7 +15,7 @@ function handleKeyPress(props, event) {
 }
 
 function IndexPage(Props) {
-  const url = window.bgimages[0];
+  const url = Props.todo.bg;
   return (
     <div className={styles.normal}>
       <div className={styles.main}>

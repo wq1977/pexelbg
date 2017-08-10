@@ -1,3 +1,4 @@
+import * as photos from '../services/photo';
 
 export default {
 
@@ -7,6 +8,7 @@ export default {
     items: [],
     inputBuffer: '',
     olditems: [],
+    bg: '',
   },
 
   subscriptions: {
@@ -20,6 +22,10 @@ export default {
   effects: {
     *fetch({ payload }, { call, put }) {  // eslint-disable-line
       yield put({ type: 'save' });
+    },
+    *clean({ payload }, { call, put }) {
+      const { data } = yield call(photos.query, { });
+      yield put({ type: 'bg', payload: data });
     },
   },
 
@@ -38,6 +44,9 @@ export default {
     },
     buffer(state, { payload }) {
       return { ...state, inputBuffer: payload };
+    },
+    bg(state, { payload }) {
+      return { ...state, bg: payload.data.photo.url };
     },
     add(state, { payload }) {
       const item = {
