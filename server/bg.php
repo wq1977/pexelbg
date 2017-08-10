@@ -6,6 +6,9 @@
     $cnt = file_get_contents("https://www.pexels.com/?format=js&page=1&seed=$seed");
     $pattern = '/<img width=\\\\"([0-9]*)\\\\" height=\\\\"([0-9]*)\\\\" style=\\\\"[^"]*\\\\" alt=\\\\"[^"]*\\\\" data-pin-media=\\\\"[^"]*\\\\" src=\\\\"(https:\/\/images.pexels.com\/photos\/[0-9]*\/[a-zA-Z0-9-]*.jpg)/';
     $count = preg_match_all($pattern, $cnt, $matches, PREG_SET_ORDER);
+    $select = $matches[rand() % count($matches)];
+
+    $result = [];
     for ($i=0;$i<count($matches);$i++){
         $item = $matches[$i];
         if (floatval($item[2]) == 0) continue;
@@ -14,9 +17,11 @@
         $check = abs($w_h - $stand);
         if ($check < 0.3) {
             $url = $item[3];
-            echo("\"${url}?w=1280&auto=compress&cs=tinysrgb\",");
+            array_push($result, "\"${url}?w=1880&auto=compress&cs=tinysrgb\",");
         }
     }
+
+    echo($result[rand() % count($result)]);
     echo("]");
 
 ?>
