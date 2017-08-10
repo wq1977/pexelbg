@@ -9,7 +9,7 @@ app.use(cookieSession({
     name: 'chrometab',
     keys: ['good', 'bad']
 }))
-app.use('/graphql', (req, res) => {
+app.use('/chromeql', (req, res) => {
     return GraphHTTP({
         schema,
         graphiql: true, // or whatever you want
