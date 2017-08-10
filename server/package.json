@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "nodemon": "nodemon server.js --exec babel-node",
-    "pm2": "pm2 start server.js --name 'graphql' --interpreter babel-node"
+    "pm2": "pm2 start server.js --name 'chromeql' --interpreter babel-node"
   },
   "author": "",
   "license": "ISC",
