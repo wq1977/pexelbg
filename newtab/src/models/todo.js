@@ -49,7 +49,7 @@ export default {
         return item.state === 0;
       }));
       let clientid = state.clientid;
-      if (clientid === '') {
+      if (!clientid) {
         clientid = guid();
       }
       return { ...state, clientid, items, olditems };

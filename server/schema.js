@@ -42,8 +42,32 @@ const Query = new GraphQLObjectType({
                     return DB.models.users.find({where: {
                         uuid: userid
                     }})
-                }).then((err, user) => {
-                    return DB.models.photos.findOne();
+                }).then((user) => {
+                    var Promise = require("bluebird");
+                    return new Promise((resolve) => {
+                        let photop = DB.models.photos.findAll({
+                            include:[{
+                                model: DB.models.users,
+                                where:{
+                                    id: user.id
+                                },
+                                required: false
+                            }],
+                            where: {
+                                '$`users`.id$':{
+                                    $eq: null,
+                                }
+                            },
+                            order: [['ratio', 'DESC']],
+                            subQuery:false,
+                            limit:3
+                        });
+                        photop.then((photos) => {
+                            photos[0].addUser(user).then(() => {
+                                resolve(photos[0])
+                            })
+                        });
+                    });
                 })
             }
         },

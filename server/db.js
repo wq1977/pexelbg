@@ -41,13 +41,8 @@ const User = Conn.define('users', {
     ]
 })
 
-const PhotoRecord = Conn.define('records', {
-})
-
-User.hasMany(PhotoRecord);
-Photo.hasMany(PhotoRecord);
-PhotoRecord.belongsTo(User);
-PhotoRecord.belongsTo(Photo);
+User.belongsToMany(Photo, {through: 'records'});
+Photo.belongsToMany(User, {through: 'records'});
 
 Conn.sync().then(()=>{
     console.log("sync done")
