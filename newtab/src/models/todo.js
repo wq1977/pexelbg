@@ -1,5 +1,14 @@
 import * as photos from '../services/photo';
 
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
+}
+
 export default {
 
   namespace: 'todo',
@@ -9,6 +18,7 @@ export default {
     inputBuffer: '',
     olditems: [],
     bg: '',
+    clientid: '',
   },
 
   subscriptions: {
@@ -23,8 +33,9 @@ export default {
     *fetch({ payload }, { call, put }) {  // eslint-disable-line
       yield put({ type: 'save' });
     },
-    *clean({ payload }, { call, put }) {
-      const { data } = yield call(photos.query, { });
+    *clean({ payload }, { call, put, select }) {
+      const clientid = yield select(state => state.todo.clientid);
+      const { data } = yield call(photos.query, { clientid });
       yield put({ type: 'bg', payload: data });
     },
   },
@@ -37,7 +48,11 @@ export default {
       const olditems = state.olditems.concat(state.items.filter((item) => {
         return item.state === 0;
       }));
-      return { ...state, items, olditems };
+      let clientid = state.clientid;
+      if (clientid === '') {
+        clientid = guid();
+      }
+      return { ...state, clientid, items, olditems };
     },
     save(state, action) {
       return { ...state, ...action.payload };

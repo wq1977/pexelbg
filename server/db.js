@@ -6,7 +6,7 @@ const Conn = new Sequelize(
     'chrome@2',
     {
         dialect: "mysql",
-        "host": "localhost"
+        host: "localhost"
     }
 );
 

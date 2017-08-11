@@ -29,10 +29,13 @@ const Query = new GraphQLObjectType({
     fields: {
         photo: {
             type: Photo,
+            args: {
+                user: {
+                    type: new GraphQLNonNull(GraphQLString)
+                },
+            },
             resolve: (root, args, context) => {
-                const uuidv1 = require('uuid/v1');
-                context.req.session.user = context.req.session.user || uuidv1();
-                const userid = context.req.session.user;
+                const userid = args.user;
                 return DB.models.users.upsert({
                     uuid: userid,
                 }).then(()=>{
