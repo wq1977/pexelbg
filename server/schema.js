@@ -52,6 +52,13 @@ const Query = new GraphQLObjectType({
                                     id: user.id
                                 },
                                 required: false
+                            },{
+                                model: DB.models.tags,
+                                where: {
+                                    title:{
+                                        $in:["sea"],
+                                    }
+                                }
                             }],
                             where: {
                                 '$`users`.id$':{
@@ -102,6 +109,7 @@ const Mutation = new GraphQLObjectType({
                         }})
                     }).then((photo) => {
                         return Promise.all(args.tags.map((title) => {
+                            title = title.toLowerCase();
                             return DB.models.tags.upsert({
                                 title
                             }).then(()=>{
