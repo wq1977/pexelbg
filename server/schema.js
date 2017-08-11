@@ -88,6 +88,9 @@ const Mutation = new GraphQLObjectType({
                     ratio: {
                         type: new GraphQLNonNull(GraphQLFloat)
                     },
+                    tags: {
+                        type: new GraphQLList(GraphQLString) 
+                    },
                 },
                 resolve(_, args){
                     return DB.models.photos.upsert({
@@ -97,6 +100,22 @@ const Mutation = new GraphQLObjectType({
                         return DB.models.photos.find({where: {
                             url: args.url
                         }})
+                    }).then((photo) => {
+                        return Promise.all(args.tags.map((title) => {
+                            return DB.models.tags.upsert({
+                                title
+                            }).then(()=>{
+                                return DB.models.tags.find({where: {
+                                    title
+                                }})
+                            })
+                        })).then((tags) => {
+                            return photo.addTag(tags);
+                        }).then(() => {
+                            return new Promise((resolve)=> {
+                                resolve(photo);
+                            })
+                        })
                     })
                 }
             }

@@ -18,16 +18,20 @@ req = urllib.request.Request(
 f = urllib.request.urlopen(req)
 cnt = f.read().decode('utf-8')
 
-all = re.findall("<img width=\\\\\"([0-9]*)\\\\\" height=\\\\\"([0-9]*)\\\\\" style=\\\\\"[^\"]*\\\\\" alt=\\\\\"[^\"]*\\\\\" data-pin-media=\\\\\"[^\"]*\\\\\" src=\\\\\"(https:\/\/images.pexels.com\/photos\/[0-9]*\/[a-zA-Z0-9-]*.jpg)", cnt)
+all = re.findall("<img width=\\\\\"([0-9]*)\\\\\" height=\\\\\"([0-9]*)\\\\\" style=\\\\\"[^\"]*\\\\\" alt=\\\\\"([^\"]*)\\\\\" data-pin-media=\\\\\"[^\"]*\\\\\" src=\\\\\"(https:\/\/images.pexels.com\/photos\/[0-9]*\/[a-zA-Z0-9-]*.jpg)", cnt)
 
 def save(photo):
     if photo[1] == '0':
         return
+    tags = photo[2]
+    if tags.startswith('Free stock photo of '):
+        tags = tags[20:]
+    tags = ",".join(["\"%s\"" % (x.strip()) for x in (re.split("[, ]", tags)) if len(x)>0 ])
     data = """mutation {
-        addPhoto(url:"%s", ratio:%f) {
+        addPhoto(url:"%s", ratio:%f, tags:[%s]) {
             url
         }
-    }""" % (photo[2],float(photo[0])/float(photo[1]))
+    }""" % (photo[3],float(photo[0])/float(photo[1]), tags)
     req =  urllib.request.Request("http://localhost:4000/chromeql", 
     headers={
         'Content-Type': 'application/graphql'

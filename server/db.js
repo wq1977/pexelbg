@@ -10,6 +10,14 @@ const Conn = new Sequelize(
     }
 );
 
+const Tag = Conn.define('tags', {
+    title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+    }
+})
+
 const Photo = Conn.define('photos', {
     url: {
         type: Sequelize.STRING,
@@ -43,6 +51,8 @@ const User = Conn.define('users', {
 
 User.belongsToMany(Photo, {through: 'records'});
 Photo.belongsToMany(User, {through: 'records'});
+Tag.belongsToMany(Photo, {through: 'tagphotos'});
+Photo.belongsToMany(Tag, {through: 'tagphotos'});
 
 Conn.sync().then(()=>{
     console.log("sync done")
