@@ -7,11 +7,12 @@ const app = dva();
 
 // 2. Plugins
 app.use({
-  extraEnhancers: [persistState()],
+  extraEnhancers: [persistState('todo')],
 });
 
 // 3. Model
 app.model(require('./models/todo'));
+app.model(require('./models/photo'));
 
 // 4. Router
 app.router(require('./router'));

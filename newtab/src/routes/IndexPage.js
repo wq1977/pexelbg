@@ -15,7 +15,7 @@ function handleKeyPress(props, event) {
 }
 
 function IndexPage(Props) {
-  const url = Props.todo.bg;
+  const url = Props.photo.bg;
   return (
     <div className={styles.normal}>
       <div className={styles.main}>
@@ -41,5 +41,5 @@ IndexPage.propTypes = {
 };
 
 export default connect((state) => {
-  return { todo: state.todo };
+  return { todo: state.todo, photo: state.photo };
 })(IndexPage);
