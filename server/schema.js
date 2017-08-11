@@ -43,37 +43,59 @@ const Query = new GraphQLObjectType({
                         uuid: userid
                     }})
                 }).then((user) => {
-                    var Promise = require("bluebird");
-                    return new Promise((resolve) => {
-                        let photop = DB.models.photos.findAll({
-                            include:[{
-                                model: DB.models.users,
-                                where:{
-                                    id: user.id
-                                },
-                                required: false
-                            },{
-                                model: DB.models.tags,
-                                where: {
-                                    title:{
-                                        $in:["sea"],
-                                    }
-                                }
-                            }],
-                            where: {
-                                '$`users`.id$':{
-                                    $eq: null,
-                                }
+                    context.__user = user;
+                    return DB.models.photos.findAll({
+                        include:[{
+                            model: DB.models.users,
+                            where:{
+                                id: user.id
                             },
-                            order: [['ratio', 'DESC']],
-                            subQuery:false,
-                            limit:3
-                        });
-                        photop.then((photos) => {
-                            photos[0].addUser(user).then(() => {
-                                resolve(photos[0])
-                            })
-                        });
+                            required: false
+                        },{
+                            model: DB.models.tags,
+                            where: {
+                                title:{
+                                    $in:["sea"],
+                                }
+                            }
+                        }],
+                        where: {
+                            '$`users`.id$':{
+                                $eq: null,
+                            }
+                        },
+                        order: [['ratio', 'DESC']],
+                        subQuery:false,
+                        limit:3
+                    })
+                }).then((photos) => {
+                    if (photos.length>0){
+                        return new Promise((resolve) => {
+                            resolve(photos)
+                        })
+                    }
+                    return DB.models.photos.findAll({
+                        include:[{
+                            model: DB.models.users,
+                            where:{
+                                id: context.__user.id
+                            },
+                            required: false
+                        }],
+                        where: {
+                            '$`users`.id$':{
+                                $eq: null,
+                            }
+                        },
+                        order: [['ratio', 'DESC']],
+                        subQuery:false,
+                        limit:3
+                    })                    
+                }).then((photos) => {
+                    return new Promise((resolve) => {
+                        photos[0].addUser(context.__user).then(() => {
+                            resolve(photos[0])
+                        })
                     });
                 })
             }
