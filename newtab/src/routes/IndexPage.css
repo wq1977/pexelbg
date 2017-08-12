@@ -33,8 +33,14 @@
 }
 
 .input {
-  margin: 5px;
-  align-self: stretch;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed #83A4C5;
+  outline: none;
+  padding: 0px 0px 0px 0px;
+  font-style: italic;
+  font-size: 18px;
+  align-self: flex-end;
 }
 
 .main {

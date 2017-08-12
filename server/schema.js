@@ -55,7 +55,7 @@ const Query = new GraphQLObjectType({
                             model: DB.models.tags,
                             where: {
                                 title:{
-                                    $in:["sea"],
+                                    $in:["sea", "mountain", "sky", "ocean"],
                                 }
                             }
                         }],

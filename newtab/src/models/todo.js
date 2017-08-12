@@ -15,6 +15,7 @@ export default {
     items: [],
     inputBuffer: '',
     clientid: '',
+    nextbg: '',
   },
 
   subscriptions: {
@@ -55,6 +56,9 @@ export default {
       items[payload].state = 1 - items[payload].state;
       items[payload].modifiedat = new Date();
       return { ...state, items };
+    },
+    nextbg(state, { payload }) {
+      return { ...state, nextbg: payload };
     },
   },
 

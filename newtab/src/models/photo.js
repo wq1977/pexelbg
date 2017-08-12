@@ -17,26 +17,22 @@ export default {
 
   effects: {
     *init({ payload }, { call, put, select }) {  // eslint-disable-line
-      const bg = yield select(state => state.photo.bg);
+      const nextbg = yield select(state => state.todo.nextbg);
       const clientid = yield select(state => state.todo.clientid);
-      if (!bg) {
+      if (!nextbg) {
         const { data } = yield call(photos.query, { clientid });
         yield put({ type: 'bg', payload: data.data.photo.url });
       } else {
-        const nextbg = yield select(state => state.photo.nextbg);
         yield put({ type: 'bg', payload: nextbg });
       }
       const { data } = yield call(photos.query, { clientid });
-      yield put({ type: 'nextbg', payload: data.data.photo.url });
+      yield put({ type: 'todo/nextbg', payload: data.data.photo.url });
     },
   },
 
   reducers: {
     bg(state, { payload }) {
       return { ...state, bg: payload };
-    },
-    nextbg(state, { payload }) {
-      return { ...state, nextbg: payload };
     },
   },
 

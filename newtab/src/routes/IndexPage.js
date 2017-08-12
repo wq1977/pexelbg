@@ -18,12 +18,9 @@ function IndexPage(Props) {
   const url = Props.photo.bg;
   return (
     <div className={styles.normal}>
-      <div className={styles.main}>
-        <div
-          className={styles.submain}
-          style={{ backgroundImage: `url(${url})` }}
-        >
-          <TodoList /><img className={styles.shouldhide} alt="" src={Props.photo.nextbg} />
+      <div className={styles.main} style={{ backgroundImage: `url(${url})` }} >
+        <div className={styles.submain}>
+          <TodoList /><img className={styles.shouldhide} alt="" src={Props.todo.nextbg} />
         </div>
         <input
           className={styles.input}
