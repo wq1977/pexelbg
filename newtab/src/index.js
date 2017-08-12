@@ -7,7 +7,7 @@ const app = dva();
 
 // 2. Plugins
 app.use({
-  extraEnhancers: [persistState('todo')],
+  extraEnhancers: [persistState(['todo', 'photo'])],
 });
 
 // 3. Model

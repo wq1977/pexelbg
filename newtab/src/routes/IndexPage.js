@@ -23,7 +23,7 @@ function IndexPage(Props) {
           className={styles.submain}
           style={{ backgroundImage: `url(${url})` }}
         >
-          <TodoList />
+          <TodoList /><img className={styles.shouldhide} alt="" src={Props.photo.nextbg} />
         </div>
         <input
           className={styles.input}
