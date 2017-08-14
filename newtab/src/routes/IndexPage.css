@@ -33,11 +33,12 @@
 }
 
 .input {
-  background: transparent;
+  background: rgba(120, 120, 120, 0.8);
   border: none;
   border-bottom: 1px dashed #83A4C5;
+  border-radius: 5pt;
   outline: none;
-  padding: 0px 0px 0px 0px;
+  padding: 5pt;
   font-style: italic;
   font-size: 18px;
   align-self: flex-end;
